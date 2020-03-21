@@ -1,0 +1,34 @@
+{
+  "name": "use-firebase-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {
+    "@types/react": "^16.9.25",
+    "firebase": "^7.12.0",
+    "mitt": "^1.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "push:patch": "npm version patch -m \"Pushed package to %s\"",
+    "push:minor": "npm version minor -m \"Pushed package to %s\"",
+    "push:major": "npm version major -m \"Pushed package to %s\""
+  },
+  "keywords": [
+    "firebase",
+    "pubsub",
+    "events",
+    "multiplayer",
+    "communication"
+  ],
+  "author": {
+    "name": "Jonny Thaw",
+    "url": "https://jthaw.me"
+  },
+  "license": "MIT"
+}

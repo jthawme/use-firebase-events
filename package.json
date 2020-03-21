@@ -1,6 +1,6 @@
 {
   "name": "use-firebase-events",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A small pub sub like system piped through firebase",
   "main": "dist/index.js",
   "dependencies": {

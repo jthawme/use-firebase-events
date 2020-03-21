@@ -85,9 +85,9 @@ const EventsProvider = ({
   const eventsDatabaseRef = useRef<firebase.database.Query>();
 
   const on = useCallback<EventsContextProps["on"]>((eventName, callback) => {
-    mittRef.current.on(eventName, callback);
+    mittRef.on(eventName, callback);
 
-    return () => mittRef.current.off(eventName, callback);
+    return () => mittRef.off(eventName, callback);
   }, []);
 
   const fire = useCallback<EventsContextProps["fire"]>(
@@ -155,7 +155,7 @@ const EventsProvider = ({
             action
           };
 
-          mittRef.current.emit(data.type, obj);
+          mittRef.emit(data.type, obj);
         }
       };
 

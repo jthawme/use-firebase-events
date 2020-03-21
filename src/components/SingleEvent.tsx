@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
-import { useFirebaseEvents, EventObject } from "./Events";
+import { useFirebaseEvents, EventObject, UnlistenFunction } from "./Events";
 
 interface EventComponentProps {
   name: string;
@@ -9,7 +9,7 @@ interface EventComponentProps {
 const useSingleEvent = ({ name, onEvent }: EventComponentProps) => {
   const startNameRef = useRef(name);
   const { on, fire } = useFirebaseEvents();
-  const unlisten = useRef(on(name, onEvent));
+  const unlisten = useRef<UnlistenFunction>();
 
   const fireSingle = useCallback(
     (data: { [key: string]: any }) => {
@@ -25,6 +25,12 @@ const useSingleEvent = ({ name, onEvent }: EventComponentProps) => {
       );
     }
   }, [name]);
+
+  useEffect(() => {
+    unlisten.current = on(name, onEvent);
+
+    return () => unlisten.current();
+  }, []);
 
   return {
     unlisten: unlisten.current,

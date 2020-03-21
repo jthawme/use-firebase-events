@@ -31,7 +31,7 @@ export interface EventObject {
 }
 
 export type ListenFunction = (event: EventObject) => void;
-type UnlistenFunction = () => void;
+export type UnlistenFunction = () => void;
 
 interface EventsContextProps {
   on: (eventName: string, callback: ListenFunction) => UnlistenFunction;
@@ -148,10 +148,8 @@ const EventsProvider = ({
       ) => {
         if (key) {
           const obj: EventObject = {
+            ...data,
             key,
-            type: data.type,
-            createdAt: data.createdAt,
-            data: data,
             action
           };
 

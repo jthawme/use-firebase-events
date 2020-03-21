@@ -1,5 +1,9 @@
 # useFirebaseEvents
 
+<a href="https://www.npmjs.com/package/use-firebase-events">
+  <img src="https://img.shields.io/npm/v/use-firebase-events.svg" alt="npm package" />
+</a>
+
 Designed to help you get up and running with an event like system connected through the marvellous [Firebase](https://firebase.google.com/)
 
 ## Install

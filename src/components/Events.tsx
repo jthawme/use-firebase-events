@@ -71,6 +71,8 @@ interface EventsProviderProps {
   };
 }
 
+const mittRef = mitt();
+
 const EventsProvider = ({
   children,
   config,
@@ -78,9 +80,8 @@ const EventsProvider = ({
   startFromLast = true,
   fireRetries = DEFAULT_RETRIES
 }: EventsProviderProps) => {
-  const mittRef = useRef<mitt.Emitter>(mitt());
-  const firebaseRef = useRef(firebase.initializeApp(config));
-  const databaseRef = useRef(firebaseRef.current.database());
+  const firebaseRef = useRef<firebase.app.App>();
+  const databaseRef = useRef<firebase.database.Database>();
   const eventsDatabaseRef = useRef<firebase.database.Query>();
 
   const on = useCallback<EventsContextProps["on"]>((eventName, callback) => {
@@ -91,7 +92,7 @@ const EventsProvider = ({
 
   const fire = useCallback<EventsContextProps["fire"]>(
     (eventName, data, retry = 0) => {
-      if (eventsDatabaseRef.current) {
+      if (databaseRef.current) {
         const keyRef = databaseRef.current.ref(eventsRefName).push();
 
         return keyRef
@@ -174,6 +175,9 @@ const EventsProvider = ({
   );
 
   useEffect(() => {
+    firebaseRef.current = firebase.initializeApp(config);
+    databaseRef.current = firebase.database();
+
     const setupDBListener = async () => {
       const dbRef = await getCurrent();
 

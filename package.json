@@ -4,17 +4,21 @@
   "description": "A small pub sub like system piped through firebase",
   "main": "dist/index.js",
   "dependencies": {
-    "@types/react": "^16.9.25",
     "firebase": "^7.12.0",
-    "mitt": "^1.2.0",
+    "mitt": "^1.2.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.9.25",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
     "typescript": "^3.8.3"
   },
-  "devDependencies": {},
   "scripts": {
+    "start": "tsc -w",
     "build": "tsc",
-    "prepare": "npm run build",
+    "prepublish": "npm run build",
     "push:patch": "npm version patch -m \"Pushed package to %s\"",
     "push:minor": "npm version minor -m \"Pushed package to %s\"",
     "push:major": "npm version major -m \"Pushed package to %s\""

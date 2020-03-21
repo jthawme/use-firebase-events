@@ -40,11 +40,13 @@ interface EventsContextProps {
     data: { [key: string]: any },
     retry?: number
   ) => Promise<boolean>;
+  remove: (eventName?: string) => Promise<boolean>;
 }
 
 const EventsContext = createContext<EventsContextProps>({
   on: () => () => null,
-  fire: () => Promise.resolve(false)
+  fire: () => Promise.resolve(false),
+  remove: () => Promise.resolve(false)
 });
 
 interface EventsProviderProps {
@@ -116,6 +118,27 @@ const EventsProvider = ({
     },
     []
   );
+
+  const remove = useCallback<EventsContextProps["remove"]>(eventName => {
+    const eventsRef = databaseRef.current.ref(eventsRefName);
+
+    if (eventName) {
+      eventsRef
+        .orderByChild("type")
+        .equalTo(eventName)
+        .once("value", snapshot => {
+          const p: Array<Promise<any>> = [];
+          snapshot.forEach(s => {
+            p.push(eventsRef.child(s.key).remove());
+          });
+
+          return Promise.all(p);
+        })
+        .then(() => true);
+    } else {
+      eventsRef.remove().then(() => true);
+    }
+  }, []);
 
   const getCurrent = useCallback(async () => {
     if (startFromLast) {
@@ -192,7 +215,8 @@ const EventsProvider = ({
 
   const values = {
     on,
-    fire
+    fire,
+    remove
   };
 
   return (

@@ -123,7 +123,7 @@ const EventsProvider = ({
     const eventsRef = databaseRef.current.ref(eventsRefName);
 
     if (eventName) {
-      eventsRef
+      return eventsRef
         .orderByChild("type")
         .equalTo(eventName)
         .once("value", snapshot => {
@@ -136,7 +136,7 @@ const EventsProvider = ({
         })
         .then(() => true);
     } else {
-      eventsRef.remove().then(() => true);
+      return eventsRef.remove().then(() => true);
     }
   }, []);
 
